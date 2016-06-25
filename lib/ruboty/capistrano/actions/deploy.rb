@@ -29,9 +29,9 @@ module Ruboty
 
         private
         def deploy
-          cmd = "cd #{path} && bundle exec cap #{@rails_env} deploy BRANCH=#{@branch}"
+          cmd = "cd #{path} && bundle && bundle exec cap #{@rails_env} deploy BRANCH=#{@branch}"
           out, err, status = Bundler.with_clean_env { Open3.capture3(cmd) }
-          raise DeployError.new(err) if err
+          raise DeployError.new(err) unless err.empty?
         end
       end
     end
