@@ -30,6 +30,10 @@ module Ruboty
 
         private
         def deploy
+          if @env == 'production' && @branch != 'master'
+            raise InvalidDeploySettingError.new('production環境はmaster以外でdeploy出来ません')
+          end
+
           cmd = "cd #{path} && bundle && bundle exec cap #{@env} deploy BRANCH=#{@branch}"
           out, err, status = Bundler.with_clean_env { Open3.capture3(cmd) }
           raise DeployError.new(err) unless err.empty?
