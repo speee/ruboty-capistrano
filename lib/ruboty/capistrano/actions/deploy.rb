@@ -14,7 +14,9 @@ module Ruboty
         end
 
         def call
-          message.reply(deploy)
+          message.reply("#{@rails_env}環境にBRANCH:#{@branch}をdeployします")
+          deploy
+          message.reply("#{@rails_env}環境にBRANCH:#{@branch}をdeploy完了しました")
         rescue => e
           err_message = <<~TEXT
             :cop:問題が発生しました:cop:
@@ -30,8 +32,6 @@ module Ruboty
           cmd = "cd #{path} && bundle exec cap #{@rails_env} deploy BRANCH=#{@branch}"
           out, err, status = Bundler.with_clean_env { Open3.capture3(cmd) }
           raise DeployError.new(err) if err
-
-          "#{@rails_env}環境にBRANCH:#{@branch}をdeployしました"
         end
       end
     end
