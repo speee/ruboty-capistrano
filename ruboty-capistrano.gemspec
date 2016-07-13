@@ -9,8 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Morioka Shuhei"]
   spec.email         = ["selmertsx@gmail.com"]
 
-  spec.summary       = %q{ Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{ Write a longer description or delete this line.}
+  spec.summary       = %q{ Ruboty plugin for deploy application via capistrano.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
