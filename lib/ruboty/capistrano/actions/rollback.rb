@@ -28,7 +28,7 @@ module Ruboty
         end
 
         private
-        def deploy
+        def rollback
           cmd = "cd #{path} && bundle && bundle exec cap #{@env} deploy:rollback"
           out, err, status = Bundler.with_clean_env { Open3.capture3(cmd) }
           raise RollbackError.new(err) unless err.empty?
