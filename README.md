@@ -23,6 +23,17 @@ Or install it yourself as:
 
 ![usage](https://cloud.githubusercontent.com/assets/1563239/16789796/6aa5a088-48eb-11e6-9422-fc98904255a9.jpg)
 
+### Deploy
+
+```
+@bot_name deploy environment branch_name
+```
+
+### Rollback
+
+```
+@bot_name rollback environment
+```
 
 ## Env
 
