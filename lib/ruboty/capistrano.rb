@@ -1,5 +1,6 @@
 require 'open3'
 require 'active_support/all'
+require 'date'
 require 'ruboty/capistrano/version'
 require 'ruboty/handlers/capistrano'
 
