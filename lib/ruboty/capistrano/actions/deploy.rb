@@ -22,11 +22,9 @@ module Ruboty
         rescue => e
           err_message = <<~TEXT
             :cop:問題が発生しました:cop:
-            ```
-            #{e.message}
-            ```
           TEXT
-          @logger.error err_message
+
+          @logger.error e.message
           message.reply(err_message)
         end
 
