@@ -12,13 +12,12 @@ module Ruboty
           @role = message.match_data[1]
           @path = Ruboty::Capistrano.config.repository_path[@role]
           @branch = message.match_data[2] || ENV['DEFAULT_BRANCH']
-          @logger = Logger.new("#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
+          @logger = Logger.new(deploy_log_path)
         end
 
         def call
           message.reply("#{@env}環境の#{@role}にBRANCH:#{@branch}をdeployします")
-          response = deploy
-          @logger.info response
+          deploy
           message.reply("#{@env}環境の#{@role}にBRANCH:#{@branch}をdeploy完了しました")
         rescue => e
           err_message = <<~TEXT
@@ -27,7 +26,7 @@ module Ruboty
             #{e.message}
             ```
           TEXT
-          @logger.error err
+          @logger.error err_message
           message.reply(err_message)
         end
 
@@ -39,8 +38,14 @@ module Ruboty
 
           cmd = "cd #{path} && bundle && bundle exec cap #{@env} deploy BRANCH=#{@branch}"
           out, err, status = Bundler.with_clean_env { Open3.capture3(cmd) }
+          @logger.info out
           raise DeployError.new(err) unless err.empty?
-          out
+        end
+
+        def deploy_log_path
+          return STDOUT if Ruboty::Capistrano.config.log_path.to_s.empty?
+
+          File.join(Ruboty::Capistrano.config.log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
         end
       end
     end
