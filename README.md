@@ -42,6 +42,7 @@ RUBOTY_ENV              - deploy先の環境を指定する
 DEFAULT_BRANCH          - deploy時において、branch指定されていなかった場合に、deployするdefaultのbranch
 DEPLOY_REPOSITORY_PATH  - deploy対象のrepositoryのpath
 (ex: "sample:/path/to/sample;admin:/path/to/admin")
+DEPLOY_LOG_PATH         - deploy時のログを残すpath
 ```
 
 ## License
