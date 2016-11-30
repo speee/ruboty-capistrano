@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     ruboty-capistrano (0.1.2)
+      octokit
 
 GEM
   remote: https://rubygems.org/
@@ -11,10 +12,18 @@ GEM
       i18n (~> 0.7)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
+    addressable (2.5.0)
+      public_suffix (~> 2.0, >= 2.0.2)
     concurrent-ruby (1.0.2)
     diff-lcs (1.2.5)
+    faraday (0.10.0)
+      multipart-post (>= 1.2, < 3)
     i18n (0.7.0)
     minitest (5.9.0)
+    multipart-post (2.0.0)
+    octokit (4.6.1)
+      sawyer (~> 0.8.0, >= 0.5.3)
+    public_suffix (2.0.4)
     rake (10.5.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
@@ -29,6 +38,9 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
+    sawyer (0.8.1)
+      addressable (>= 2.3.5, < 2.6)
+      faraday (~> 0.8, < 1.0)
     thread_safe (0.3.5)
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
