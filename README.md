@@ -43,6 +43,9 @@ DEFAULT_BRANCH          - deploy時において、branch指定されていなか
 DEPLOY_REPOSITORY_PATH  - deploy対象のrepositoryのpath
 (ex: "sample:/path/to/sample;admin:/path/to/admin")
 DEPLOY_LOG_PATH         - deploy時のログを残すpath
+GITHUB_ACCESS_TOKEN     - GitHubのアクセストークン(GitHubのAPIを用いるため)
+DEPLOY_REPOSITORY_NAME  - deploy対象のGitHubのrepository名
+(ex: "sample:hoge/sample-repo;admin:hoge/admin-repo")
 ```
 
 ## License
