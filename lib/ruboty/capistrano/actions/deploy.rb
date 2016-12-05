@@ -7,13 +7,14 @@ module Ruboty
         class DeployError < StandardError; end
         class NoBranchError < StandardError; end
 
-        attr_reader :message, :path, :env, :branch, :role
+        attr_reader :message, :path, :name, :env, :branch, :role
 
         def initialize(message)
           @message = message
           @env = Ruboty::Capistrano.config.env
           @role = message.match_data[1]
           @path = Ruboty::Capistrano.config.repository_path[@role]
+          @name = Ruboty::Capistrano.config.repository_name[@role]
           @branch = message.match_data[2] || ENV['DEFAULT_BRANCH']
           @logger = Logger.new(deploy_log_path)
         end
@@ -41,8 +42,8 @@ module Ruboty
             raise InvalidDeploySettingError.new('production環境はmaster以外でdeploy出来ません')
           end
 
-          unless Ruboty::Capistrano::Github.branch_exist?(@branch)
-            raise NoBranchError, "#{@branch}は存在しないブランチです"
+          unless Ruboty::Capistrano::Github.branch_exist?(name, branch)
+            raise NoBranchError, "#{role}のリポジトリに#{branch}ブランチは存在しません"
           end
 
           cmd = "cd #{path} && bundle && bundle exec cap #{@env} deploy BRANCH=#{@branch}"
