@@ -5,6 +5,7 @@ module Ruboty
     module Actions
       class Deploy < Ruboty::Actions::Base
         class DeployError < StandardError; end
+        class InvalidDeploySettingError; end
         class NoBranchError < StandardError; end
 
         attr_reader :message, :path, :name, :env, :branch, :role
