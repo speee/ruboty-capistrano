@@ -10,7 +10,7 @@ module Ruboty::Capistrano
     end
 
     def exist_github?
-      !!client.branch(repo_name, branch)
+      !!client.branch(repo, branch)
     rescue Octokit::NotFound
       false
     end
