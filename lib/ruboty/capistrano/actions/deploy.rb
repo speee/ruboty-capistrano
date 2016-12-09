@@ -1,6 +1,3 @@
-require 'ruboty/capistrano/verification'
-require 'ruboty/capistrano/deploy_source'
-
 module Ruboty
   module Capistrano
     module Actions

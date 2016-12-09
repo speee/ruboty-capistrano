@@ -1,5 +1,7 @@
 require 'ruboty/capistrano/actions/deploy'
 require 'ruboty/capistrano/actions/rollback'
+require 'ruboty/capistrano/verification'
+require 'ruboty/capistrano/deploy_source'
 
 module Ruboty
   module Handlers
