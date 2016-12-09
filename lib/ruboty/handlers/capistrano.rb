@@ -10,7 +10,18 @@ module Ruboty
       on(/rollback\s+(.*)/m, name: 'rollback', description: 'rollbackする')
 
       def deploy(message)
+        role = message.match_data[1]
+        Ruboty::Capistrano::Verification.new(
+          env: Ruboty::Capistrano.config.env,
+          role: role,
+          deploy_source: Ruboty::Capistrano::DeploySource.new(
+            repo: Ruboty::Capistrano.config.repository_name[role],
+            branch: message.match_data[2] || ENV['DEFAULT_BRANCH']
+          )
+        ).execute
         Ruboty::Capistrano::Actions::Deploy.new(message).call
+      rescue => e
+        message.reply(e.message)
       end
 
       def rollback(message)

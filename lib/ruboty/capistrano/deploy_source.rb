@@ -4,9 +4,9 @@ module Ruboty::Capistrano
   class DeploySource
     attr_reader :repo, :branch
 
-    def initialize(repo, branch)
-      @repo = repo
-      @branch = branch
+    def initialize(**args)
+      @repo = args[:repo]
+      @branch = args[:branch]
     end
 
     def exist_github?
