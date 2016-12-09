@@ -18,21 +18,21 @@ module Ruboty
       end
 
       def execute
-        prod_branch_limit
-        exist_branch_check
+        validate_deploy_branch_for_production
+        validate_existence_in_github
       rescue => e
         rescue_with_handler(e)
       end
 
       private
 
-      def prod_branch_limit
+      def validate_deploy_branch_for_production
         if env == 'production' && deploy_source.branch != 'master'
           raise InvalidDeploySettingError, 'production環境はmaster以外でdeploy出来ません'
         end
       end
 
-      def exist_branch_check
+      def validate_existence_in_github
         unless deploy_source.exist_github?
           raise NoBranchError, "#{deploy_source.repo}のリポジトリに#{deploy_source.branch}ブランチは存在しません"
         end
