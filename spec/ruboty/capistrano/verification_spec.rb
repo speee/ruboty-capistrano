@@ -3,7 +3,7 @@ require 'ruboty/capistrano/verification'
 require 'ruboty/capistrano/deploy_source'
 
 describe Ruboty::Capistrano::Verification do
-  let(:deploy_source) { Ruboty::Capistrano::DeploySource.new(repo, branch) }
+  let(:deploy_source) { Ruboty::Capistrano::DeploySource.new(repo: repo, branch: branch) }
   let(:verification) do
     Ruboty::Capistrano::Verification.new(
       env: env,
