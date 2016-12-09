@@ -2,7 +2,7 @@ require 'octokit'
 
 module Ruboty::Capistrano
   class DeploySource
-    attr_reader :repo, :branch, :client
+    attr_reader :repo, :branch
 
     def initialize(repo, branch)
       @repo = repo
@@ -10,15 +10,15 @@ module Ruboty::Capistrano
     end
 
     def exist_github?
-      !!client.branch(repo, branch)
+      !!octokit_client.branch(repo, branch)
     rescue Octokit::NotFound
       false
     end
 
     private
 
-    def client
-      @client ||= Octokit::Client.new(access_token: Ruboty::Capistrano.config.github_access_token)
+    def octokit_client
+      @octokit_client ||= Octokit::Client.new(access_token: Ruboty::Capistrano.config.github_access_token)
     end
   end
 end
