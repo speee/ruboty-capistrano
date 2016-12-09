@@ -36,13 +36,11 @@ module Ruboty
         private
 
         def verify
-          verification = Ruboty::Capistrano::Verification.new(
+          Ruboty::Capistrano::Verification.new(
             env: env,
             role: role,
             deploy_source: Ruboty::Capistrano::DeploySource.new(repo, branch)
-          )
-          verification.prod_branch_limit
-          verification.exist_branch_check
+          ).execute
         end
 
         def deploy

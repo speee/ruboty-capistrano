@@ -12,6 +12,13 @@ module Ruboty
         @deploy_source = args[:deploy_source]
       end
 
+      def execute
+        prod_branch_limit
+        exist_branch_check
+      end
+
+      private
+
       def prod_branch_limit
         if env == 'production' && deploy_source.branch != 'master'
           raise InvalidDeploySettingError, 'production環境はmaster以外でdeploy出来ません'
