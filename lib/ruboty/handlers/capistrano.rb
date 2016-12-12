@@ -15,6 +15,7 @@ module Ruboty
         role = message.match_data[1]
         env = Ruboty::Capistrano.config.env
         branch = message.match_data[2] || ENV['DEFAULT_BRANCH']
+
         Ruboty::Capistrano::Verification.new(
           env: env,
           role: role,
@@ -23,14 +24,15 @@ module Ruboty
             branch: branch
           )
         ).execute
+
+        message.reply("#{env}環境の#{role}にBRANCH:#{branch}をdeployします")
         Ruboty::Capistrano::Actions::Deploy.new(
-          message: message,
           env: env,
-          role: role,
           repo_path: Ruboty::Capistrano.config.repository_path[role],
           branch: branch,
           log_path: Ruboty::Capistrano.config.log_path.to_s
         ).call
+        message.reply("#{env}環境の#{role}にBRANCH:#{branch}をdeploy完了しました")
       rescue => e
         message.reply(e.message)
       end
