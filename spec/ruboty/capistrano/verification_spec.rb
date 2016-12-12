@@ -39,6 +39,12 @@ describe Ruboty::Capistrano::Verification do
         allow(deploy_source).to receive(:exist_github?).and_return(false)
       end
 
+      it { expect { verification.execute }.to raise_error(Ruboty::Capistrano::Verification::BranchNotFoundError) }
+    end
+
+    context 'ブランチが指定されていない時' do
+      let(:branch) { nil }
+
       it { expect { verification.execute }.to raise_error(Ruboty::Capistrano::Verification::NoBranchError) }
     end
   end
