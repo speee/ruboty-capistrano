@@ -14,7 +14,7 @@ module Ruboty
       def deploy(message)
         role = message.match_data[1]
         env = Ruboty::Capistrano.config.env
-        branch = message.match_data[2] || ENV['DEFAULT_BRANCH']
+        branch = message.match_data[2]
 
         Ruboty::Capistrano::Verification.new(
           env: env,
