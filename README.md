@@ -26,13 +26,13 @@ Or install it yourself as:
 ### Deploy
 
 ```
-@bot_name deploy environment branch_name
+@bot_name deploy role branch_name
 ```
 
 ### Rollback
 
 ```
-@bot_name rollback environment
+@bot_name rollback role
 ```
 
 ## Env
@@ -40,11 +40,11 @@ Or install it yourself as:
 ```
 RUBOTY_ENV              - deploy先の環境を指定する
 DEFAULT_BRANCH          - deploy時において、branch指定されていなかった場合に、deployするdefaultのbranch
-DEPLOY_REPOSITORY_PATH  - deploy対象のrepositoryのpath
+LOCAL_REPOSITORY_PATH  - deploy対象が存在しているディレクトリパス
 (ex: "sample:/path/to/sample;admin:/path/to/admin")
 DEPLOY_LOG_PATH         - deploy時のログを残すpath
 GITHUB_ACCESS_TOKEN     - GitHubのアクセストークン(GitHubのAPIを用いるため)
-DEPLOY_REPOSITORY_NAME  - deploy対象のGitHubのrepository名
+REMOTE_REPOSITORY_PATH  - deploy対象のGitHubのrepository
 (ex: "sample:hoge/sample-repo;admin:hoge/admin-repo")
 ```
 
