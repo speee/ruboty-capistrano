@@ -15,8 +15,8 @@ module Ruboty
         config.env = ENV['RUBOTY_ENV']
         config.github_access_token = ENV['GITHUB_ACCESS_TOKEN']
         config.log_path = ENV['DEPLOY_LOG_PATH']
-        config.repository_name = extract.call(ENV['DEPLOY_REPOSITORY_NAME'])
-        config.repository_path = extract.call(ENV['DEPLOY_REPOSITORY_PATH'])
+        config.remote_repo_path = extract.call(ENV['REMOTE_REPOSITORY_PATH'])
+        config.local_repo_path = extract.call(ENV['LOCAL_REPOSITORY_PATH'])
       end
     end
   end

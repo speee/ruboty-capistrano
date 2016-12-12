@@ -10,7 +10,7 @@ module Ruboty
           @message = message
           @env = Ruboty::Capistrano.config.env
           @role = message.match_data[1]
-          @path = Ruboty::Capistrano.config.repository_path[@role]
+          @path = Ruboty::Capistrano.config.local_repo_path[@role]
         end
 
         def call
