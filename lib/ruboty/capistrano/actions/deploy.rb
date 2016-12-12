@@ -4,15 +4,15 @@ module Ruboty
       class Deploy < Ruboty::Actions::Base
         class DeployError < StandardError; end
 
-        attr_reader :message, :path, :env, :branch, :role, :logger
+        attr_reader :message, :repo_path, :env, :branch, :role, :logger, :log_path
 
-        def initialize(message)
+        def initialize(message:, env:, role:, repo_path:, branch:, log_path: './tmp')
           @message = message
-          @env = Ruboty::Capistrano.config.env
-          @role = message.match_data[1]
-          @path = Ruboty::Capistrano.config.repository_path[@role]
-          @branch = message.match_data[2] || ENV['DEFAULT_BRANCH']
-          @logger = Logger.new(deploy_log_path)
+          @env = env
+          @role = role
+          @repo_path = repo_path
+          @branch = branch
+          @logger = Logger.new(log_path)
         end
 
         def call
@@ -34,9 +34,9 @@ module Ruboty
         end
 
         def deploy_log_path
-          return STDOUT if Ruboty::Capistrano.config.log_path.to_s.empty?
+          return STDOUT if log_path.empty?
 
-          File.join(Ruboty::Capistrano.config.log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
+          File.join(log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
         end
 
         def unknown_error

@@ -11,10 +11,10 @@ module Ruboty
 
       attr_reader :env, :role, :deploy_source
 
-      def initialize(**args)
-        @env = args[:env]
-        @role = args[:role]
-        @deploy_source = args[:deploy_source]
+      def initialize(env:, role:, deploy_source:)
+        @env = env
+        @role = role
+        @deploy_source = deploy_source
       end
 
       def execute

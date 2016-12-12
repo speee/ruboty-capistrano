@@ -13,15 +13,24 @@ module Ruboty
 
       def deploy(message)
         role = message.match_data[1]
+        env = Ruboty::Capistrano.config.env
+        branch = message.match_data[2] || ENV['DEFAULT_BRANCH']
         Ruboty::Capistrano::Verification.new(
-          env: Ruboty::Capistrano.config.env,
+          env: env,
           role: role,
           deploy_source: Ruboty::Capistrano::DeploySource.new(
             repo: Ruboty::Capistrano.config.repository_name[role],
-            branch: message.match_data[2] || ENV['DEFAULT_BRANCH']
+            branch: branch
           )
         ).execute
-        Ruboty::Capistrano::Actions::Deploy.new(message).call
+        Ruboty::Capistrano::Actions::Deploy.new(
+          message: message,
+          env: env,
+          role: role,
+          repo_path: Ruboty::Capistrano.config.repository_path[role],
+          branch: branch,
+          log_path: Ruboty::Capistrano.config.log_path.to_s
+        ).call
       rescue => e
         message.reply(e.message)
       end
