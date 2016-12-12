@@ -4,13 +4,13 @@ module Ruboty
       class Deploy < Ruboty::Actions::Base
         class DeployError < StandardError; end
 
-        attr_reader :repo_path, :env, :branch, :logger, :log_path
+        attr_reader :repo_path, :env, :branch, :logger
 
-        def initialize(env:, repo_path:, branch:, log_path: './tmp')
+        def initialize(env:, repo_path:, branch:, log_path: './tmp/')
           @env = env
           @repo_path = repo_path
           @branch = branch
-          @logger = Logger.new(log_path)
+          @logger = Logger.new(deploy_log_path(log_path))
         end
 
         def call
@@ -29,7 +29,7 @@ module Ruboty
           raise DeployError.new(err) unless err.empty?
         end
 
-        def deploy_log_path
+        def deploy_log_path(log_path)
           return STDOUT if log_path.empty?
 
           File.join(log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
