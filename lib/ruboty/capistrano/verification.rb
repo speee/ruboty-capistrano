@@ -6,8 +6,8 @@ module Ruboty
 
       include ActiveSupport::Rescuable
 
-      rescue_from NoBranchError, with: -> (e) { raise NoBranchError, no_branch_error(e) }
-      rescue_from InvalidDeploySettingError, with: -> (e) { raise InvalidDeploySettingError, invalid_deploy_setting_error(e) }
+      rescue_from NoBranchError, with: -> (e) { raise NoBranchError, error_message(e, ':u7121:') }
+      rescue_from InvalidDeploySettingError, with: -> (e) { raise InvalidDeploySettingError, error_message(e, ':no_entry_sign:') }
 
       attr_reader :env, :role, :deploy_source
 
@@ -38,15 +38,9 @@ module Ruboty
         end
       end
 
-      def no_branch_error(e)
+      def error_message(e, emoji)
         <<~TEXT
-          :u7121:#{e.message}:u7121:
-        TEXT
-      end
-
-      def invalid_deploy_setting_error(e)
-        <<~TEXT
-         :no_entry_sign:#{e.message}:no_entry_sign:
+          #{emoji}#{e.message}#{emoji}
         TEXT
       end
     end
