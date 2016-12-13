@@ -12,9 +12,8 @@ module Ruboty
       on(/rollback\s+(.*)/m, name: 'rollback', description: 'rollbackする')
 
       def deploy(message)
-        role = message.match_data[1]
+        role, branch = message.match_data[1..2]
         env = Ruboty::Capistrano.config.env
-        branch = message.match_data[2]
 
         Ruboty::Capistrano::Verification.new(
           env: env,
