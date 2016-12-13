@@ -5,12 +5,6 @@ module Ruboty
       class BranchNotFoundError < StandardError; end
       class NoBranchError < StandardError; end
 
-      include ActiveSupport::Rescuable
-
-      rescue_from InvalidDeploySettingError, with: -> (e) { raise InvalidDeploySettingError, error_message(e, ':no_entry_sign:') }
-      rescue_from BranchNotFoundError, with: -> (e) { raise BranchNotFoundError, error_message(e, ':u7121:') }
-      rescue_from NoBranchError, with: -> (e) { raise NoBranchError, error_message(e, ':u7121:') }
-
       attr_reader :env, :role, :deploy_source
 
       def initialize(env:, role:, deploy_source:)
@@ -23,34 +17,26 @@ module Ruboty
         validate_deploy_branch_for_production
         validate_branch_specified
         validate_existence_in_github
-      rescue => e
-        rescue_with_handler(e)
       end
 
       private
 
       def validate_deploy_branch_for_production
         if env == 'production' && deploy_source.branch != 'master'
-          raise InvalidDeploySettingError, 'production環境はmaster以外でdeploy出来ません'
+          raise InvalidDeploySettingError, ':no_entry_sign:production環境はmaster以外でdeploy出来ません:no_entry_sign:'
         end
       end
 
       def validate_branch_specified
         if deploy_source.branch.blank?
-          raise NoBranchError, 'ブランチが指定されていません'
+          raise NoBranchError, ':u7121:ブランチが指定されていません:u7121:'
         end
       end
 
       def validate_existence_in_github
         unless deploy_source.exist_github?
-          raise BranchNotFoundError, "#{deploy_source.repo}のリポジトリに#{deploy_source.branch}ブランチは存在しません"
+          raise BranchNotFoundError, ":u7121:#{deploy_source.repo}のリポジトリに#{deploy_source.branch}ブランチは存在しません:u7121:"
         end
-      end
-
-      def error_message(e, emoji)
-        <<~TEXT
-          #{emoji}#{e.message}#{emoji}
-        TEXT
       end
     end
   end
