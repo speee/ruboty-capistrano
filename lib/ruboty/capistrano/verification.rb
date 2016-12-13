@@ -21,8 +21,8 @@ module Ruboty
 
       def execute
         validate_deploy_branch_for_production
-        validate_existence_in_github
         validate_branch_specified
+        validate_existence_in_github
       rescue => e
         rescue_with_handler(e)
       end
@@ -35,15 +35,15 @@ module Ruboty
         end
       end
 
-      def validate_existence_in_github
-        unless deploy_source.exist_github?
-          raise BranchNotFoundError, "#{deploy_source.repo}のリポジトリに#{deploy_source.branch}ブランチは存在しません"
+      def validate_branch_specified
+        if deploy_source.branch.blank?
+          raise NoBranchError, 'ブランチが指定されていません'
         end
       end
 
-      def validate_branch_specified
-        unless deploy_source.branch
-          raise NoBranchError, 'ブランチが指定されていません'
+      def validate_existence_in_github
+        unless deploy_source.exist_github?
+          raise BranchNotFoundError, "#{deploy_source.repo}のリポジトリに#{deploy_source.branch}ブランチは存在しません"
         end
       end
 
