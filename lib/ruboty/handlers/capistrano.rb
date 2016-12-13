@@ -29,7 +29,6 @@ module Ruboty
           env: env,
           repo_path: Ruboty::Capistrano.config.local_repo_path[role],
           branch: branch,
-          log_path: Ruboty::Capistrano.config.log_path.to_s
         ).call
         message.reply("#{env}環境の#{role}にBRANCH:#{branch}をdeploy完了しました")
       rescue => e

@@ -6,11 +6,11 @@ module Ruboty
 
         attr_reader :repo_path, :env, :branch, :logger
 
-        def initialize(env:, repo_path:, branch:, log_path: './tmp/')
+        def initialize(env:, repo_path:, branch:)
           @env = env
           @repo_path = repo_path
           @branch = branch
-          @logger = Logger.new(deploy_log_path(log_path))
+          @logger = Logger.new(deploy_log_path)
         end
 
         def call
@@ -29,10 +29,10 @@ module Ruboty
           raise DeployError.new(err) unless err.empty?
         end
 
-        def deploy_log_path(log_path)
-          return STDOUT if log_path.empty?
+        def deploy_log_path
+          return STDOUT if Ruboty::Capistrano.config.log_path.to_s.empty?
 
-          File.join(log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
+          File.join(Ruboty::Capistrano.config.log_path.to_s, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
         end
 
         def unknown_error
