@@ -32,7 +32,7 @@ module Ruboty
         def deploy_log_path
           return STDOUT if Ruboty::Capistrano.config.log_path.to_s.empty?
 
-          File.join(Ruboty::Capistrano.config.log_path.to_s, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
+          File.join(Ruboty::Capistrano.config.log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
         end
       end
     end
