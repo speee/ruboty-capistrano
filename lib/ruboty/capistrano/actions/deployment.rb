@@ -13,7 +13,7 @@ module Ruboty
         def run
           deploy
         rescue => e
-          logger.error e.message
+          Ruboty::Capistrano.logger.error e.message
           errors << ':cop:問題が発生しました:cop:'
         end
 
@@ -27,19 +27,10 @@ module Ruboty
           Ruboty::Capistrano.config.local_repo_path[role]
         end
 
-        def logger
-          @logger ||= Logger.new(deploy_log_path)
-        end
-
         def deploy
           cmd = "cd #{repo_path} && bundle && bundle exec cap #{env} deploy BRANCH=#{branch}"
           out, err, status = Bundler.with_clean_env { Open3.capture3(cmd) }
           raise DeployError.new(err) unless err.empty?
-        end
-
-        def deploy_log_path
-          return STDOUT if Ruboty::Capistrano.config.log_path.to_s.empty?
-          File.join(Ruboty::Capistrano.config.log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
         end
       end
     end
