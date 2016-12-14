@@ -1,8 +1,12 @@
 require 'open3'
 require 'active_support/all'
 require 'date'
+require 'octokit'
 require 'ruboty/capistrano/version'
+require 'ruboty/capistrano/github_repository_validators'
 require 'ruboty/handlers/capistrano'
+require 'ruboty/capistrano/actions/deployment'
+require 'ruboty/capistrano/actions/rollback'
 
 module Ruboty
   module Capistrano

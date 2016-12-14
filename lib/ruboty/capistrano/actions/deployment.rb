@@ -2,7 +2,9 @@ module Ruboty
   module Capistrano
     module Actions
       class Deployment < Ruboty::Actions::Base
-        attr_reader :role, :branch
+        include Ruboty::Capistrano::GitHubRepositoryValidator
+
+        attr_reader :role, :branch, :errors
 
         def initialize(role: , branch:)
           @role = role
@@ -11,6 +13,8 @@ module Ruboty
         end
 
         def run
+          return unless validates
+
           deploy
           errors.empty?
         end

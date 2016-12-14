@@ -1,6 +1,3 @@
-require 'ruboty/capistrano/actions/deployment'
-require 'ruboty/capistrano/actions/rollback'
-
 module Ruboty
   module Handlers
     class Capistrano < Base
