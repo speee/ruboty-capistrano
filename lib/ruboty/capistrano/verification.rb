@@ -5,11 +5,10 @@ module Ruboty
       class BranchNotFoundError < StandardError; end
       class NoBranchError < StandardError; end
 
-      attr_reader :env, :role, :deploy_source
+      attr_reader :env, :deploy_source
 
-      def initialize(env:, role:, deploy_source:)
+      def initialize(env:, deploy_source:)
         @env = env
-        @role = role
         @deploy_source = deploy_source
       end
 

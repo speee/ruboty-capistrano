@@ -17,7 +17,6 @@ module Ruboty
 
         Ruboty::Capistrano::Verification.new(
           env: env,
-          role: role,
           deploy_source: Ruboty::Capistrano::DeploySource.new(
             repo: Ruboty::Capistrano.config.remote_repo_path[role],
             branch: branch
