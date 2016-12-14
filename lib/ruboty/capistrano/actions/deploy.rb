@@ -17,7 +17,7 @@ module Ruboty
           deploy
         rescue => e
           logger.error e.message
-          raise e, unknown_error
+          raise e, ':cop:問題が発生しました:cop:'
         end
 
         private
@@ -33,12 +33,6 @@ module Ruboty
           return STDOUT if Ruboty::Capistrano.config.log_path.to_s.empty?
 
           File.join(Ruboty::Capistrano.config.log_path.to_s, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
-        end
-
-        def unknown_error
-          <<~TEXT
-            :cop:問題が発生しました:cop:
-          TEXT
         end
       end
     end
