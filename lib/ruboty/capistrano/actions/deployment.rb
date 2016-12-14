@@ -12,10 +12,6 @@ module Ruboty
 
         def run
           deploy
-        rescue => e
-          Ruboty::Capistrano.logger.error e.message
-          errors << ':cop:問題が発生しました:cop:'
-        ensure
           errors.empty?
         end
 
@@ -40,7 +36,10 @@ module Ruboty
         def deploy
           cmd = "cd #{repo_path} && bundle && bundle exec cap #{env} deploy BRANCH=#{branch}"
           out, err, status = Bundler.with_clean_env { Open3.capture3(cmd) }
-          raise DeployError.new(err) unless err.empty?
+          return if err.empty?
+
+          Ruboty::Capistrano.logger err
+          errors << 'deploy中にエラーが発生しました'
         end
       end
     end
