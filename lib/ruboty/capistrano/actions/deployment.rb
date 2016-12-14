@@ -15,6 +15,16 @@ module Ruboty
         rescue => e
           Ruboty::Capistrano.logger.error e.message
           errors << ':cop:問題が発生しました:cop:'
+        ensure
+          errors.empty?
+        end
+
+        def message_before_deploy
+          "#{env}環境の#{role}にBRANCH:#{branch}をdeployします"
+        end
+
+        def message_after_deploy
+          "#{env}環境の#{role}にBRANCH:#{branch}をdeployしました"
         end
 
         private

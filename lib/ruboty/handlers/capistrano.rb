@@ -1,6 +1,5 @@
 require 'ruboty/capistrano/actions/deployment'
 require 'ruboty/capistrano/actions/rollback'
-require 'ruboty/capistrano/verification'
 
 module Ruboty
   module Handlers
@@ -11,11 +10,11 @@ module Ruboty
       on(/rollback\s+(.*)/m, name: 'rollback', description: 'rollbackする')
 
       def deploy(message)
-        deployment = Actions::Deployment.new(deploy_params(message))
-        message.reply("#{env}環境の#{role}にBRANCH:#{branch}をdeployします")
+        deployment = Ruboty::Capistrano::Actions::Deployment.new(deploy_params(message))
+        message.reply(deployment.message_before_deploy)
 
         if deployment.run
-          message.reply('deployを完了しました')
+          message.reply(deployment.message_after_deploy)
         else
           message.reply(deployment.errors.join(','))
         end
