@@ -6,7 +6,7 @@ require 'ruboty/capistrano/version'
 Gem::Specification.new do |spec|
   spec.name          = "ruboty-capistrano"
   spec.version       = Ruboty::Capistrano::VERSION
-  spec.authors       = ["Morioka Shuhei"]
+  spec.authors       = ["Morioka Shuhei (selmertsx)", "Speee, Inc."]
   spec.email         = ["selmertsx@gmail.com"]
 
   spec.summary       = %q{ Ruboty plugin for deploy application via capistrano.}
