@@ -16,12 +16,12 @@ module Ruboty
       @config ||= Ruboty::Capistrano::Config.config
     end
 
-    def self.loggers
+    def self.logger
       return STDOUT if Ruboty::Capistrano.config.log_path.to_s.empty?
       return @logger if @logger
 
-      log_path = File.join(Ruboty::Capistrano.config.log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
-      @logger = Logger.new(deploy_log_path)
+      log_path = File.join(Ruboty::Capistrano.config.log_path, "#{DateTime.now.strftime('%Y%m%d')}.log")
+      @logger = Logger.new(log_path)
     end
   end
 end

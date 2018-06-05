@@ -37,12 +37,28 @@ module Ruboty
           Ruboty::Capistrano.config.local_repo_path[role]
         end
 
+        def cmd
+          return @cmd if @cmd
+          cmd_ary = []
+          cmd_ary << "cd #{repo_path}"
+          version_file = "#{repo_path}/.ruby-version"
+          if Ruboty::Capistrano.config.rbenv_root && File.exist?(version_file)
+            cmd_ary << "RBENV_VERSION=\"$(cat #{version_file})\" rbenv exec bundle"
+            cmd_ary << "RBENV_VERSION=\"$(cat #{version_file})\" rbenv exec bundle exec cap #{env} deploy BRANCH=#{branch}"
+          else
+            cmd_ary << 'bundle'
+            cmd_ary << "bundle exec cap #{env} deploy BRANCH=#{branch}"
+          end
+          @cmd = cmd_ary.join(' && ')
+        end
+
         def deploy
-          cmd = "cd #{repo_path} && bundle && bundle exec cap #{env} deploy BRANCH=#{branch}"
+          Ruboty::Capistrano.logger.info("RUN: #{cmd}")
           out, err, status = Bundler.with_clean_env { Open3.capture3(cmd) }
+          Ruboty::Capistrano.logger.info(out)
           return if err.empty?
 
-          Ruboty::Capistrano.logger err
+          Ruboty::Capistrano.logger.error(err)
           errors << 'deploy中にエラーが発生しました'
         end
       end
