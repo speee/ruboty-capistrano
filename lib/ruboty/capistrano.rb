@@ -20,7 +20,7 @@ module Ruboty
       return STDOUT if Ruboty::Capistrano.config.log_path.to_s.empty?
       return @logger if @logger
 
-      log_path = File.join(Ruboty::Capistrano.config.log_path, "#{DateTime.now.strftime('%Y%m%d%H%M')}.log")
+      log_path = File.join(Ruboty::Capistrano.config.log_path, "#{DateTime.now.strftime('%Y%m%d')}.log")
       @logger = Logger.new(log_path)
     end
   end
