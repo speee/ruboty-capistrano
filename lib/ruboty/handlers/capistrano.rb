@@ -10,10 +10,12 @@ module Ruboty
         deployment = Ruboty::Capistrano::Actions::Deployment.new(deploy_params(message))
         message.reply(deployment.message_before_deploy)
 
-        if deployment.run
-          message.reply(deployment.message_after_deploy)
-        else
-          message.reply(deployment.errors.join(','))
+        Thread.start do
+          if deployment.run
+            message.reply(deployment.message_after_deploy)
+          else
+            message.reply(deployment.errors.join(','))
+          end
         end
       end
 
